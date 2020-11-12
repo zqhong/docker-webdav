@@ -1,4 +1,4 @@
-FROM debian:testing-slim
+FROM debian:10.6-slim
 
 RUN apt-get update && apt-get install -y nginx nginx-extras apache2-utils
 
