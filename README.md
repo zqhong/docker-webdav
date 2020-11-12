@@ -34,3 +34,30 @@ PUERTO: 80
 ```
 docker run --name webdav --restart=unless-stopped -p 80:80 -v $HOME/docker/webdav:/media -e USERNAME=webdav -e PASSWORD=webdav -d  <IMAGE>
 ```
+
+## Logs
+
+Añadido nuevo registro de logs.
+
+### Ver logs
+
+```
+docker exec -it webdav cat /var/log/nginx/webdav_access.log
+```
+
+### Logs en tiempo real
+
+```
+docker exec -it webdav cat /var/log/nginx/webdav_access.log
+```
+
+
+
+### logs con error
+```
+docker exec -it webdav /var/log/nginx/webdav_error.log
+```
+
+
+
+
