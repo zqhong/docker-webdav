@@ -39,6 +39,7 @@ docker run --name webdav \
   -v $HOME/docker/webdav:/media \
   -e USERNAME=webdav \
   -e PASSWORD=webdav \
+  -e TZ=Europe/Madrid \
   -e UDI=1000 \
   -e GID=1000 \
   -d  ugeek/webdab:arm
