@@ -24,6 +24,7 @@ docker images
 
 ## Montar el contenedor
 
+### docker-cli
 USERNAME: webdav
 PASSWORD: webdav
 PUERTO: 80
@@ -34,6 +35,49 @@ PUERTO: 80
 ```
 docker run --name webdav --restart=unless-stopped -p 80:80 -v $HOME/docker/webdav:/media -e USERNAME=webdav -e PASSWORD=webdav -d  <IMAGE>
 ```
+
+### docker-compose
+
+```
+version: '2'
+services:
+  webdav:
+    container_name: webdav
+    image: ugeek/webdav:arm
+    ports:
+      - 80:80
+    volumes:
+      - /webdav:/media
+    environment:
+      - USERNAME=webdav
+      - PASSWORD=webdav
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+    networks:
+      - web
+    labels:
+      - traefik.backend=webdav                                                                                               
+      - traefik.frontend.rule=Host:webdav.tu_dominio.duckdns.org
+      - traefik.docker.network=web
+      - traefik.port=80
+      - traefik.enable=true
+      # Adding in secure headers
+      - traefik.http.middlewares.securedheaders.headers.forcestsheader=true
+      - traefik.http.middlewares.securedheaders.headers.sslRedirect=true
+      - traefik.http.middlewares.securedheaders.headers.STSPreload=true
+      - traefik.http.middlewares.securedheaders.headers.ContentTypeNosniff=true
+      - traefik.http.middlewares.securedheaders.headers.BrowserXssFilter=true
+      - traefik.http.middlewares.securedheaders.headers.STSIncludeSubdomains=true
+      - traefik.http.middlewares.securedheaders.headers.stsSeconds=63072000
+      - traefik.http.middlewares.securedheaders.headers.frameDeny=true
+      - traefik.http.middlewares.securedheaders.headers.browserXssFilter=true
+      - traefik.http.middlewares.securedheaders.headers.contentTypeNosniff=true
+networks:                                                                                                                   
+  web:
+   external: true 
+```
+
 
 ## Logs
 
