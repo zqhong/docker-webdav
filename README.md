@@ -33,7 +33,15 @@ PUERTO: 80
 
 
 ```
-docker run --name webdav --restart=unless-stopped -p 80:80 -v $HOME/docker/webdav:/media -e USERNAME=webdav -e PASSWORD=webdav -d  <IMAGE>
+docker run --name webdav \
+  --restart=unless-stopped \
+  -p 80:80 \
+  -v $HOME/docker/webdav:/media \
+  -e USERNAME=webdav \
+  -e PASSWORD=webdav \
+  -e UDI=1000 \
+  -e GID=1000 \
+  -d  ugeek/webdab:arm
 ```
 
 ### docker-compose con traefik y proxy inverso
@@ -51,8 +59,8 @@ services:
     environment:
       - USERNAME=webdav
       - PASSWORD=webdav
-      - PUID=1000
-      - PGID=1000
+      - UID=1000
+      - GID=1000
       - TZ=Europe/Madrid
     networks:
       - web
