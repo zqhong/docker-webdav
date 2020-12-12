@@ -36,7 +36,7 @@ PUERTO: 80
 docker run --name webdav --restart=unless-stopped -p 80:80 -v $HOME/docker/webdav:/media -e USERNAME=webdav -e PASSWORD=webdav -d  <IMAGE>
 ```
 
-### docker-compose
+### docker-compose con traefik y proxy inverso
 
 ```
 version: '2'
@@ -47,7 +47,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - /webdav:/media
+      - $HOME/docker/webdav:/media
     environment:
       - USERNAME=webdav
       - PASSWORD=webdav
@@ -76,6 +76,11 @@ services:
 networks:                                                                                                                   
   web:
    external: true 
+```
+
+Introduce el comando...
+```
+docker-compose up -d
 ```
 
 
