@@ -1,11 +1,18 @@
 version: '2'
 services:
   webdav:
+    container_name: webdav
     build: .
     ports:
       - "80:80"
     volumes:
-      - "/mnt:/media"
+      - "$HOME/docker/webdav:/media"
     environment:
-      USERNAME: user
-      PASSWORD: passwd
+      - USERNAME=webdav
+      - PASSWORD=webdav
+      - UID=1000
+      - GID=1000
+      - TZ=Europe/Madrid
+      
+      
+      
