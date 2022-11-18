@@ -5,7 +5,7 @@ COPY build/config-prod.yaml /webdav.yaml
 
 VOLUME /media
 
-EXPOSE 80
+EXPOSE 5006
 
 ENTRYPOINT [ "/webdav" ]
 CMD ["-c", "/webdav.yaml"]
