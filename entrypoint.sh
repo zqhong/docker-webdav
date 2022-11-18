@@ -1,17 +1,15 @@
 #!/bin/bash
 
-if [ -n "$USERNAME" ] && [ -n "$PASSWORD" ]
+if [ -z "$USERNAME" ]
 then
-	htpasswd -bc /etc/nginx/htpasswd $USERNAME $PASSWORD
-	echo Done.
-else
-    echo Using no auth.
-	sed -i 's%auth_basic "Restricted";% %g' /etc/nginx/conf.d/default.conf
-	sed -i 's%auth_basic_user_file htpasswd;% %g' /etc/nginx/conf.d/default.conf
+  USERNAME="webdav"
 fi
-mediaowner=$(ls -ld /media | awk '{print $3}')
-echo "Current /media owner is $mediaowner"
-if [ "$mediaowner" != "www-data" ]
+
+if [ -z "$PASSWORD" ]
 then
-    chown -R www-data:www-data /media
+  PASSWORD="default_KRyX69Ll"
 fi
+
+echo "Your account passwords are: $USERNAME, $PASSWORD"
+
+htpasswd -bc /etc/nginx/htpasswd "$USERNAME" "$PASSWORD"
