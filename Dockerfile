@@ -1,18 +1,11 @@
-FROM nginx:1.23.2
+FROM debian:11-slim
 
-COPY webdav.conf /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY entrypoint.sh /
-
-RUN chmod +x entrypoint.sh
-
-CMD /entrypoint.sh && nginx -g "daemon off;"
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-                    apache2-utils && \
-                    rm -rf /var/lib/apt/lists
+COPY build/hacdias-webdav /webdav
+COPY build/config-prod.yaml /webdav.yaml
 
 VOLUME /media
 
 EXPOSE 80
+
+ENTRYPOINT [ "/webdav" ]
+CMD ["-c", "/webdav.yaml"]
